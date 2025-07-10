@@ -48,7 +48,7 @@ final class RedlinkTransport extends AbstractTransport
 
     public function __toString(): string
     {
-        return sprintf(
+        return \sprintf(
             'redlink://%s?from=%s&version=%s',
             $this->getEndpoint(),
             $this->from,
@@ -66,7 +66,7 @@ final class RedlinkTransport extends AbstractTransport
 
         $from = $message->getFrom() ?: $this->from;
 
-        $endpoint = sprintf('https://%s/%s/sms', $this->getEndpoint(), $this->version);
+        $endpoint = \sprintf('https://%s/%s/sms', $this->getEndpoint(), $this->version);
 
         $response = $this->client->request('POST', $endpoint, [
             'headers' => [
@@ -95,7 +95,7 @@ final class RedlinkTransport extends AbstractTransport
 
             $errorMessage = $content['errors'][0]['message'] ?? '';
 
-            throw new TransportException(sprintf('Unable to send the SMS: '.$errorMessage.'. UniqId: (%s).', $requestUniqueIdentifier), $response);
+            throw new TransportException(\sprintf('Unable to send the SMS: '.$errorMessage.'. UniqId: (%s).', $requestUniqueIdentifier), $response);
         }
 
         $messageId = $content['data'][0]['externalId'] ?? '';
